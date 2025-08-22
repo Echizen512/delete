@@ -4,6 +4,7 @@ import Link from "next/link"
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import { Address } from "~~/components/scaffold-eth";
+import CreateDAOModal from "./dao/CreateDAOModal";
 import { useState } from "react"
 import { Search, Users, TrendingUp, Plus } from "lucide-react"
 
@@ -62,6 +63,9 @@ const Home: NextPage = () => {
 
   const { address: connectedAddress } = useAccount();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
   return (
     <div className="min-h-screen bg-primary pt-8">
       <div className="container mx-auto px-4 py-8">
@@ -75,17 +79,16 @@ const Home: NextPage = () => {
               Join decentralized organizations that match your interests
             </p>
           </div>
-          <Link href="/daos/create">
-            <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 font-mono font-bold transition-colors border-2 border-cyan-400 mt-4 md:mt-0 flex items-center rounded-xl">
-              <Plus className="mr-2 h-4 w-4" />
-              CREATE DAO
-            </button>
-          </Link>
+          <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 font-mono font-bold transition-colors border-2 border-cyan-400 mt-4 md:mt-0 flex items-center rounded-xl">
+            <Plus className="mr-2 h-4 w-4" />
+            CREATE DAO
+          </button>
         </div>
+
 
         {/* Search and Filters */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">
-            <div className="relative flex-1">
+          <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4 rounded-3xl" />
             <input
               type="text"
@@ -94,17 +97,16 @@ const Home: NextPage = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 bg-secondary border-2 placeholder-gray-400 px-4 py-3 font-mono focus:border-cyan-400 focus:outline-none rounded-3xl"
             />
-            </div>
+          </div>
           <div className="flex gap-2 flex-wrap">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-2xl font-mono font-bold transition-colors border-2 ${
-                  selectedCategory === category
+                className={`px-4 py-2 rounded-2xl font-mono font-bold transition-colors border-2 ${selectedCategory === category
                     ? "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
                     : "border-gray-600 text-gray-300 hover:bg-gray-500"
-                }`}
+                  }`}
               >
                 {category.toUpperCase()}
               </button>
@@ -160,6 +162,9 @@ const Home: NextPage = () => {
           </div>
         )}
       </div>
+                {isModalOpen && (
+            <CreateDAOModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          )}
     </div>
   )
 }
