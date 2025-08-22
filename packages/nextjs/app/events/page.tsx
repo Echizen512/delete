@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, MapPin, Users, Plus } from "lucide-react"
+import CreateEventModal from "./CreateEventModal"
 
 export default function EventsPage() {
     const [selectedFilter, setSelectedFilter] = useState("all")
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     const events = [
         {
@@ -67,50 +68,47 @@ export default function EventsPage() {
         return selectedFilter === "all" || event.type === selectedFilter
     })
 
-    const getStatusColor = (status: string) => {
+    const getStatusBadge = (status: string) => {
         switch (status) {
             case "Upcoming":
-                return "bg-blue-500/20 text-blue-400 border-blue-500 rounded-full"
+                return "badge badge-primary"
             case "Live":
-                return "bg-green-400/20 text-green-700 border-green-500 rounded-full"
+                return "badge badge-success"
             case "Ended":
-                return "bg-gray-500/20 text-gray-400 border-gray-500 rounded-full"
+                return "badge badge-neutral"
             default:
-                return "bg-gray-500/20 text-gray-400 border-gray-500 rounded-full"
+                return "badge"
         }
     }
 
-    const getTypeColor = (type: string) => {
+    const getTypeBadge = (type: string) => {
         switch (type) {
             case "Conference":
-                return "bg-purple-500/20 text-purple-400 rounded-full"
+                return "badge badge-secondary"
             case "Exhibition":
-                return "bg-pink-500/20 text-pink-400 rounded-full"
+                return "badge badge-accent"
             case "Hackathon":
-                return "bg-orange-500/20 text-orange-400 rounded-full"
+                return "badge badge-warning"
             case "Tournament":
-                return "bg-red-500/20 text-red-400 rounded-full"
+                return "badge badge-error"
             case "Workshop":
-                return "bg-yellow-500/20 text-yellow-400 rounded-full"
+                return "badge badge-success"
             default:
-                return "bg-gray-500/20 text-gray-400 rounded-full"
+                return "badge"
         }
     }
 
     return (
-        <div className="min-h-screen bg-primary pt-8">
+        <div className="min-h-screen bg-base-200 pt-8">
             <div className="container mx-auto px-4 py-8">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
                     <div>
-                        <h1 className="text-4xl font-bold bg-clip-text mb-2 font-mono">
-                            Community Events
-                        </h1>
-                        <p className="text-lg font-mono">Discover and join DAO community events</p>
+                        <h1 className="text-4xl font-bold mb-2 font-mono">Community Events</h1>
+                        <p className="text-lg font-mono text-base-content/70">Discover and join DAO community events</p>
                     </div>
-                    <button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 rounded-4xl text-white px-6 py-3 font-mono font-bold transition-colors border-2 border-cyan-400 mt-4 md:mt-0 flex items-center">
-                        <Plus className="mr-2 h-4 w-4" />
-                        Create Event
+                    <button onClick={() => setIsModalOpen(true)} className="btn btn-primary mt-4 md:mt-0 font-mono">
+                        ➕ Create Event
                     </button>
                 </div>
 
@@ -120,12 +118,9 @@ export default function EventsPage() {
                         <button
                             key={type}
                             onClick={() => setSelectedFilter(type)}
-                            className={`px-4 py-2 font-mono font-bold transition-colors rounded-4xl border-1 ${selectedFilter === type
-                                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
-                                    : "border-gray-600 hover:bg-gray-700"
-                                }`}
+                            className={`btn btn-sm font-mono ${selectedFilter === type ? "btn-primary" : "btn-outline"}`}
                         >
-                            {type.charAt(0).toUpperCase() + type.slice(1)}
+                            {type}
                         </button>
                     ))}
                 </div>
@@ -133,61 +128,41 @@ export default function EventsPage() {
                 {/* Events Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredEvents.map((event) => (
-                        <div
-                            key={event.id}
-                            className="bg-secondary/40 rounded-4xl transition-all duration-300 hover:transform hover:scale-105 p-6"
-                        >
-                            <div className="mb-4">
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className={`px-3 py-1 text-sm font-mono font-bold ${getTypeColor(event.type)}`}>
-                                        {event.type.toUpperCase()}
-                                    </span>
-                                    <span className={`px-3 py-1 text-sm font-mono font-bold border ${getStatusColor(event.status)}`}>
-                                        {event.status.toUpperCase()}
-                                    </span>
+                        <div key={event.id} className="card bg-base-100 shadow-md hover:shadow-lg transition-all">
+                            <div className="card-body">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className={getTypeBadge(event.type)}>{event.type}</span>
+                                    <span className={getStatusBadge(event.status)}>{event.status}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-2 font-mono">{event.title}</h3>
-                                <p className="text-gray-500 mb-2 font-mono text-sm">{event.description}</p>
-                                <div className="text-sm text-cyan-400 font-medium font-mono">by {event.dao}</div>
-                            </div>
+                                <h2 className="card-title font-mono">{event.title}</h2>
+                                <p className="text-sm text-base-content/70 font-mono">{event.description}</p>
+                                <div className="text-sm text-info font-bold font-mono mt-1">by {event.dao}</div>
 
-                            <div className="space-y-3 mb-4">
-                                <div className="flex items-center">
-                                    <Calendar className="h-4 w-4 mr-2" />
-                                    <span className="text-sm font-mono">
-                                        {event.date} at {event.time}
-                                    </span>
+                                <div className="mt-4 space-y-2 text-sm font-mono text-base-content/60">
+                                    <div>📅 {event.date} at {event.time}</div>
+                                    <div>📍 {event.location}</div>
+                                    <div>👥 {event.attendees} / {event.maxAttendees} attendees</div>
                                 </div>
-                                <div className="flex items-center text-gray-500">
-                                    <MapPin className="h-4 w-4 mr-2" />
-                                    <span className="text-sm font-mono">{event.location}</span>
-                                </div>
-                                <div className="flex items-center text-gray-500">
-                                    <Users className="h-4 w-4 mr-2" />
-                                    <span className="text-sm font-mono">
-                                        {event.attendees} / {event.maxAttendees} attendees
-                                    </span>
-                                </div>
-                            </div>
 
-                            <div className="flex gap-2">
-                                <button className="flex-1 rounded-4xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white py-2 px-4 font-mono font-bold transition-colors border-2 border-cyan-400">
-                                    {event.status === "Live" ? "Join Now" : "Register"}
-                                </button>
-                                <button className="border-2 rounded-4xl border-gray-600 hover:bg-gray-500 px-4 py-2 font-mono font-bold transition-colors">
-                                    Details
-                                </button>
+                                <div className="card-actions mt-4 justify-between">
+                                    <button className="btn btn-primary btn-sm font-mono w-full">
+                                        {event.status === "Live" ? "Join Now" : "Register"}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
 
+                {/* Empty State */}
                 {filteredEvents.length === 0 && (
                     <div className="text-center py-12">
-                        <p className="text-gray-400 text-lg font-mono">No events found for the selected filter</p>
+                        <p className="text-base-content/60 text-lg font-mono">🚫 No events found for the selected filter</p>
                     </div>
                 )}
             </div>
+
+            {isModalOpen && <CreateEventModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
         </div>
     )
 }
