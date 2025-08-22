@@ -38,14 +38,24 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <CalendarDaysIcon className="h-4 w-4" />,
   },
   {
-    label: "DeFi",
-    href: "/defi",
+    label: "Admin",
+    href: "/admin",
+    icon: <ChartBarIcon className="h-4 w-4" />, // Changed icon
+  },
+  {
+    label: "Teasury",
+    href: "/teasury",
     icon: <BanknotesIcon className="h-4 w-4" />,
   },
   {
-    label: "Staking",
-    href: "/staking",
-    icon: <ChartBarIcon className="h-4 w-4" />,
+    label: "Auditor",
+    href: "/auditor",
+    icon: <BugAntIcon className="h-4 w-4" />, // Changed icon
+  },
+  {
+    label: "About",
+    href: "/about",
+    icon: <ClipboardDocumentListIcon className="h-4 w-4" />, // Changed icon
   },
 ];
 
@@ -63,7 +73,7 @@ export const HeaderMenuLinks = () => {
               passHref
               className={`${
                 isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
+              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-1 grid grid-flow-col`}
             >
               {icon}
               <span>{label}</span>
