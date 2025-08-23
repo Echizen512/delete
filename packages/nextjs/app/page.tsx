@@ -5,9 +5,9 @@ import CreateDAOModal from "./dao/CreateDAOModal";
 import DAODetailModal from "./dao/DAODetailModal";
 import JoinDAOModal from "./dao/JoinDAOModal";
 import type { NextPage } from "next";
-import { PlusIcon } from "@heroicons/react/24/outline";
 import { ButtonAnimateText } from "~~/components/ButtonAnimateText";
 import { DAO_CATEGORIES } from "~~/constants/daoCategories";
+import { Plus } from "lucide-react";
 
 type DAO = {
   id: number;
@@ -80,7 +80,7 @@ const Home: NextPage = () => {
         {/* Button Create DAO */}
         <div className="w-full flex flex-col justify-center items-center my-4">
           <ButtonAnimateText
-            icon={<PlusIcon className="w-4 h-4" />}
+            icon={<Plus className="w-4 h-4" />}
             texts={["Bring your idea to life", "Turn your vision into a DAO", "Make history: launch your DAO"]}
           />
         </div>

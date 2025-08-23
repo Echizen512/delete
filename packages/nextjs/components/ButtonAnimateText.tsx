@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import RotatingText from "./RotatingText";
+import RotatingText from "./ui/RotatingText";
 import { cn } from "~~/utils/cn";
 
 type ButtonAnimateTextProps = {

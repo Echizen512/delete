@@ -1,9 +1,9 @@
 "use client";
 
 import { CreateParticles } from "./CreateParticles";
-import RotatingText from "./RotatingText";
 import { RainbowKitCustomConnectButton } from "./scaffold-eth";
 import GradientText from "./ui/GradientText";
+import RotatingText from "./ui/RotatingText";
 import { Calendar, DollarSign, Shield, TrendingUp, Users, Vote } from "lucide-react";
 
 const features = [
@@ -83,15 +83,15 @@ export const LandingPage = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-16 text-primary font-mono">POWERFUL FEATURES</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
+            {features.map((x, index) => (
               <div
                 key={index}
                 className="card bg-base-200 border border-primary/30 shadow-md hover:border-primary transition-transform hover:scale-105"
               >
                 <div className="card-body items-center text-center">
-                  <feature.icon className="h-12 w-12 text-primary mb-4" />
-                  <h3 className="card-title text-base-content font-mono">{feature.title}</h3>
-                  <p className="text-base-content/70 font-mono text-sm">{feature.desc}</p>
+                  {x.icon}
+                  <h3 className="card-title text-base-content font-mono">{x.title}</h3>
+                  <p className="text-base-content/70 font-mono text-sm">{x.desc}</p>
                 </div>
               </div>
             ))}

@@ -4,17 +4,8 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BanknoteIcon, BarChartBig, Calendar, ChartBar, Files, HandIcon, Home, Users } from "lucide-react";
 import { hardhat } from "viem/chains";
-import {
-  BanknotesIcon,
-  Bars3Icon,
-  BugAntIcon,
-  CalendarDaysIcon,
-  ChartBarIcon,
-  ClipboardDocumentListIcon,
-  HomeIcon,
-  UsersIcon,
-} from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
 
@@ -26,49 +17,49 @@ type HeaderMenuLink = {
 
 export const menuLinks: HeaderMenuLink[] = [
   {
-    label: "Home",
+    label: "Daos",
     href: "/",
-    icon: <HomeIcon className="h-4 w-4" />,
+    icon: <Home className="h-4 w-4" />,
   },
-  {
-    label: "Tasks",
-    href: "/task",
-    icon: <ClipboardDocumentListIcon className="h-4 w-4" />,
-  },
+  // {
+  //   label: "Tasks",
+  //   href: "/task",
+  //   icon: <ClipboardDocumentListIcon className="h-4 w-4" />,
+  // },
   {
     label: "Governance",
     href: "/governance",
-    icon: <UsersIcon className="h-4 w-4" />,
+    icon: <Users className="h-4 w-4" />,
   },
   {
     label: "Events",
     href: "/events",
-    icon: <CalendarDaysIcon className="h-4 w-4" />,
+    icon: <Calendar className="h-4 w-4" />,
   },
   {
     label: "Admin",
     href: "/admin",
-    icon: <ChartBarIcon className="h-4 w-4" />, // Changed icon
+    icon: <ChartBar className="h-4 w-4" />, // Changed icon
   },
   {
     label: "Teasury",
     href: "/teasury",
-    icon: <BanknotesIcon className="h-4 w-4" />,
+    icon: <BanknoteIcon className="h-4 w-4" />,
   },
-  {
-    label: "Auditor",
-    href: "/auditor",
-    icon: <BugAntIcon className="h-4 w-4" />, // Changed icon
-  },
+  // {
+  //   label: "Auditor",
+  //   href: "/auditor",
+  //   icon: <Bug className="h-4 w-4" />, // Changed icon
+  // },
   {
     label: "Staking",
     href: "/staking",
-    icon: <BugAntIcon className="h-4 w-4" />, // Changed icon
+    icon: <HandIcon className="h-4 w-4" />,
   },
   {
     label: "About",
     href: "/about",
-    icon: <ClipboardDocumentListIcon className="h-4 w-4" />, // Changed icon
+    icon: <Files className="h-4 w-4" />, // Changed icon
   },
 ];
 
@@ -115,7 +106,7 @@ export const Header = () => {
       <div className="navbar-start w-auto lg:w-1/2">
         <details className="dropdown" ref={burgerMenuRef}>
           <summary className="ml-1 btn btn-ghost lg:hidden hover:bg-transparent">
-            <Bars3Icon className="h-1/2" />
+            <BarChartBig className="h-1/2" />
           </summary>
           <ul
             className="menu menu-compact dropdown-content mt-3 p-2 shadow-sm bg-base-100 rounded-box w-52"

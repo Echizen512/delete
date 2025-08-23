@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RocketLaunchIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Rocket, X } from "lucide-react";
 import { DAO_CATEGORIES } from "~~/constants/daoCategories";
 
 const CreateDAOModal = () => {
@@ -28,7 +28,7 @@ const CreateDAOModal = () => {
       <div className="modal-box">
         <form method="dialog">
           <button className="btn btn-sm btn-circle btn-primary absolute right-2 top-2">
-            <XMarkIcon className="w-4 h-4" />
+            <X className="w-4 h-4" />
           </button>
         </form>
         <h3 className="font-bold text-lg">Create a New DAO!</h3>
@@ -79,7 +79,7 @@ const CreateDAOModal = () => {
             className="btn btn-primary mx-2 mt-4"
             disabled={name === "" || description === "" || category == "" || isCreating}
           >
-            <RocketLaunchIcon className="w-4 h-4" />
+            <Rocket className="w-4 h-4" />
             Launch DAO
           </button>
         </section>
