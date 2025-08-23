@@ -330,66 +330,69 @@ export default function LandingPage() {
     { icon: Shield, title: "Auditing", desc: "Transparent audit system" },
   ]
 
-  return (
-    <div className="relative min-h-screen overflow-hidden">
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full z-0"
-        style={{
-          display: "block",
-          imageRendering: "auto",
-        }}
-      />
+return (
+  <div className="relative min-h-screen overflow-hidden">
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full z-0"
+      style={{ display: "block", imageRendering: "auto" }}
+    />
 
-      {/* Subtle overlay for text readability */}
-      <div className="absolute inset-0 bg-black/40 z-1"></div>
+    {/* Overlay */}
+    <div className="absolute inset-0 bg-base-100/40 z-10"></div>
 
-      {/* Hero Section */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-[80vh] text-center px-4 py-24">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-bold mb-6 text-cyan-400 font-mono leading-tight">
-            THE FUTURE 
-            <br />
-            <span className="text-white">OF DAO´s</span>
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto font-mono">
-            Build, govern, and grow your DAO
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <RainbowKitCustomConnectButton />
-          </div>
-        </div>
-      </div>
-
-      {/* Features Grid */}
-      <div className="relative z-10 py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 text-cyan-400 font-mono">POWERFUL FEATURES</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-gray-900/80 border-2 border-cyan-500/30 p-6 hover:border-cyan-400 transition-all duration-300 hover:transform hover:scale-105 text-center"
-              >
-                <feature.icon className="h-12 w-12 text-cyan-400 mb-4 mx-auto" />
-                <h3 className="text-xl font-semibold text-white mb-2 font-mono">{feature.title}</h3>
-                <p className="text-gray-400 font-mono text-sm">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="relative z-10 py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6 text-white font-mono">READY TO SHAPE THE FUTURE?</h2>
-          <p className="text-xl text-gray-300 mb-8 font-mono">
-            Join thousands of innovators building the decentralized economy
-          </p>
-            <RainbowKitCustomConnectButton />
+    {/* Hero Section */}
+    <div className="relative z-20 flex flex-col items-center justify-center min-h-[80vh] text-center px-4 py-24">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-6xl md:text-8xl font-bold mb-6 text-primary font-mono leading-tight">
+          THE FUTURE
+          <br />
+          <span className="text-base-content">OF DAO´s</span>
+        </h1>
+        <p className="text-xl md:text-2xl text-base-content/70 mb-8 max-w-2xl mx-auto font-mono">
+          Build, govern, and grow your DAO
+        </p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <RainbowKitCustomConnectButton />
         </div>
       </div>
     </div>
-  )
+
+    {/* Features Grid */}
+    <section className="relative z-20 py-20 px-4">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-4xl font-bold text-center mb-16 text-primary font-mono">
+          POWERFUL FEATURES
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className="card bg-base-200 border border-primary/30 shadow-md hover:border-primary transition-transform hover:scale-105"
+            >
+              <div className="card-body items-center text-center">
+                <feature.icon className="h-12 w-12 text-primary mb-4" />
+                <h3 className="card-title text-base-content font-mono">{feature.title}</h3>
+                <p className="text-base-content/70 font-mono text-sm">{feature.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* CTA Section */}
+    <section className="relative z-20 py-20 px-4">
+      <div className="max-w-4xl mx-auto text-center">
+        <h2 className="text-4xl font-bold mb-6 text-base-content font-mono">
+          READY TO SHAPE THE FUTURE?
+        </h2>
+        <p className="text-xl text-base-content/70 mb-8 font-mono">
+          Join thousands of innovators building the decentralized economy
+        </p>
+        <RainbowKitCustomConnectButton />
+      </div>
+    </section>
+  </div>
+)
 }
