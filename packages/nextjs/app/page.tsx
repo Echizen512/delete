@@ -7,6 +7,7 @@ import JoinDAOModal from "./dao/JoinDAOModal";
 import type { NextPage } from "next";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { ButtonAnimateText } from "~~/components/ButtonAnimateText";
+import { DAO_CATEGORIES } from "~~/constants/daoCategories";
 
 type DAO = {
   id: number;
@@ -63,8 +64,6 @@ const Home: NextPage = () => {
     },
   ];
 
-  const categories = ["all", "DeFi", "NFT", "Gaming", "Environment", "Social"];
-
   const filteredDAOs = daos.filter(dao => {
     const matchesSearch =
       dao.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -102,13 +101,13 @@ const Home: NextPage = () => {
             className="input input-bordered w-full"
           />
           <div className="flex gap-2 flex-wrap">
-            {categories.map(category => (
+            {DAO_CATEGORIES.map(x => (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`btn btn-sm ${selectedCategory === category ? "btn-primary" : "btn-outline"}`}
+                key={x}
+                onClick={() => setSelectedCategory(x)}
+                className={`btn btn-sm ${selectedCategory === x ? "btn-primary" : "btn-outline"}`}
               >
-                {category.toUpperCase()}
+                {x.toUpperCase()}
               </button>
             ))}
           </div>

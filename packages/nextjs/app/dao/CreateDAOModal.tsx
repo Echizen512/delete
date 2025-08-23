@@ -1,98 +1,90 @@
 "use client";
 
-// import { useState } from "react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
+import { RocketLaunchIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { DAO_CATEGORIES } from "~~/constants/daoCategories";
 
 const CreateDAOModal = () => {
   //states
-  // const [name, setName] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [category, setCategory] = useState("DeFi");
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [category, setCategory] = useState<string>("DeFi");
   // const [treasury, setTreasury] = useState("");
+  const [isCreating, setIsCreating] = useState<boolean>(false);
 
-  // //function
-  // const handleSubmit = () => {
-  //   const newDAO = { name, description, category, treasury };
-  //   console.log("DAO created:", newDAO);
-  // };
+  //functions
+  const handleSubmit = async () => {
+    try {
+      setIsCreating(true);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsCreating(false);
+    }
+  };
 
   return (
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box">
         <form method="dialog">
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-            <XMarkIcon />
+          <button className="btn btn-sm btn-circle btn-primary absolute right-2 top-2">
+            <XMarkIcon className="w-4 h-4" />
           </button>
         </form>
-        <h3 className="font-bold text-lg">Hello!</h3>
-        <p className="py-4">Press ESC key or click on ✕ button to close</p>
+        <h3 className="font-bold text-lg">Create a New DAO!</h3>
+        <p className="py-2 my-0 text-sm text-base-content/80">
+          Build the future of your community, without intermediaries and with complete transparency.
+        </p>
+
+        <section className="p-1 flex flex-col gap-4">
+          <div className="form-control">
+            <label className="label pl-2">DAO Name</label>
+            <input
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="e.g. BlockSphere"
+              className="input input-bordered w-full rounded-lg"
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label pl-2">Description</label>
+            <textarea
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              placeholder="e.g. BlockDAO is a decentralized community focused on building open-source blockchain tools and fostering collaboration among developers worldwide."
+              className="textarea textarea-bordered w-full resize-none rounded-lg"
+              rows={3}
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label">Category</label>
+            <select
+              value={category}
+              onChange={e => setCategory(e.target.value)}
+              className="select select-bordered w-full rounded-lg"
+            >
+              {DAO_CATEGORIES.filter(y => y !== "All").map(x => (
+                <option key={x} value={x}>
+                  {x}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <button
+            onClick={handleSubmit}
+            className="btn btn-primary mx-2 mt-4"
+            disabled={name === "" || description === "" || category == "" || isCreating}
+          >
+            <RocketLaunchIcon className="w-4 h-4" />
+            Launch DAO
+          </button>
+        </section>
       </div>
     </dialog>
-
-    // <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-    //   <div className="bg-base-100 text-base-content w-full max-w-lg rounded-box shadow-xl p-8">
-    //     <form className="space-y-4 font-mono">
-    //       <div className="flex justify-between items-center mb-4">
-    //         <h2 className="text-2xl font-bold">Create New DAO</h2>
-    //         <button onClick={onClose} className="btn btn-sm btn-circle btn-ghost text-xl">✖</button>
-    //       </div>
-
-    //       <div className="form-control">
-    //         <label className="label">DAO Name</label>
-    //         <input
-    //           type="text"
-    //           value={name}
-    //           onChange={(e) => setName(e.target.value)}
-    //           placeholder="Enter DAO name"
-    //           className="input input-bordered w-full"
-    //         />
-    //       </div>
-
-    //       <div className="form-control">
-    //         <label className="label">Description</label>
-    //         <textarea
-    //           value={description}
-    //           onChange={(e) => setDescription(e.target.value)}
-    //           placeholder="Enter description"
-    //           className="textarea textarea-bordered w-full resize-none"
-    //           rows={3}
-    //         />
-    //       </div>
-
-    //       <div className="form-control">
-    //         <label className="label">Category</label>
-    //         <select
-    //           value={category}
-    //           onChange={(e) => setCategory(e.target.value)}
-    //           className="select select-bordered w-full"
-    //         >
-    //           {["DeFi", "NFT", "Gaming", "Environment", "Social"].map((cat) => (
-    //             <option key={cat} value={cat}>{cat}</option>
-    //           ))}
-    //         </select>
-    //       </div>
-
-    //       <div className="form-control">
-    //         <label className="label">Initial Treasury</label>
-    //         <input
-    //           type="text"
-    //           value={treasury}
-    //           onChange={(e) => setTreasury(e.target.value)}
-    //           placeholder="e.g. $1M"
-    //           className="input input-bordered w-full"
-    //         />
-    //       </div>
-
-    //       <button
-    //         type="button"
-    //         onClick={handleSubmit}
-    //         className="btn btn-primary w-full font-bold"
-    //       >
-    //         Launch DAO 🚀
-    //       </button>
-    //     </form>
-    //   </div>
-    // </div>
   );
 };
 
