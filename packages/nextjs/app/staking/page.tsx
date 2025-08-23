@@ -1,376 +1,267 @@
 "use client"
 
 import { useState } from "react"
-import { Calculator, TrendingUp, Lock, Unlock, DollarSign, Percent } from "lucide-react"
 
-// Staking Form Component
-const StakingForm = ({
-    stakingPools,
-    selectedPool,
-    setSelectedPool,
-    stakeAmount,
-    setStakeAmount,
-    stakingPeriod,
-    setStakingPeriod,
-}: any) => (
-    <div className="bg-secondary/40 rounded-4xl p-6">
-        <div className="mb-6">
-            <h2 className="text-xl font-bold font-mono mb-2 flex items-center">
-                <Lock className="mr-2 h-5 w-5" />
-                Stake Tokens
-            </h2>
-            <p className="text-gray-400 font-mono">Choose your staking pool and amount</p>
-        </div>
-        <div className="space-y-4">
-            <div>
-                <label className="text-gray-500 text-sm font-medium mb-2 block font-mono">Select Pool</label>
-                <select
-                    value={selectedPool}
-                    onChange={(e) => setSelectedPool(e.target.value)}
-                    className="w-full bg-primary/50 rounded-xl text-gray-500 px-4 py-3 font-mono focus:border-cyan-400 focus:outline-none"
-                >
-                    {stakingPools.map((pool: any) => (
-                        <option key={pool.id} value={pool.id}>
-                            {pool.name} ({pool.apy}% APY)
-                        </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                <label className="text-gray-500 text-sm font-medium mb-2 block font-mono">Amount to Stake</label>
-                <input
-                    type="number"
-                    placeholder="Enter amount"
-                    value={stakeAmount}
-                    onChange={(e) => setStakeAmount(e.target.value)}
-                    className="w-full bg-primary/50 rounded-xl text-gray-500 px-4 py-3 font-mono focus:border-cyan-400 focus:outline-none"
-                />
-            </div>
-            <div>
-                <label className="text-gray-500 text-sm font-medium mb-2 block font-mono">Staking Period (days)</label>
-                <select
-                    value={stakingPeriod}
-                    onChange={(e) => setStakingPeriod(e.target.value)}
-                    className="w-full bg-primary/50 rounded-xl text-gray-500 px-4 py-3 font-mono focus:border-cyan-400 focus:outline-none"
-                >
-                    <option value="30">30 days</option>
-                    <option value="60">60 days</option>
-                    <option value="90">90 days</option>
-                    <option value="180">180 days</option>
-                    <option value="365">365 days</option>
-                </select>
-            </div>
-            <button className="w-full rounded-4xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 font-mono font-bold transition-colors border-2 border-cyan-400">
-                Stake Tokens
-            </button>
-        </div>
-    </div>
-)
-
-// Rewards Calculator Component
-const RewardsCalculator = ({ rewardCalculation }: any) => (
-    <div className="bg-secondary/40 rounded-4xl p-6">
-        <div className="mb-6">
-            <h2 className="text-xl font-bold font-mono mb-2 flex items-center">
-                <Calculator className="mr-2 h-5 w-5" />
-                Rewards Calculator
-            </h2>
-            <p className="text-gray-400 font-mono">Estimate your staking rewards</p>
-        </div>
-        <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-                <div className="bg-primary/50  p-4 rounded-lg">
-                    <div className="text-gray-600 text-sm font-mono">Principal</div>
-                    <div className="text-white text-xl font-bold font-mono">{rewardCalculation.principal.toFixed(2)}</div>
-                </div>
-                <div className="bg-primary/50  p-4 rounded-lg">
-                    <div className="text-gray-600 text-sm font-mono">Est. Rewards</div>
-                    <div className="text-green-400 text-xl font-bold font-mono">{rewardCalculation.rewards.toFixed(2)}</div>
-                </div>
-            </div>
-            <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 p-4 rounded-lg border-2 border-cyan-500/30">
-                <div className="text-sm font-mono">Total Return</div>
-                <div className="text-cyan-400 text-2xl font-bold font-mono">{rewardCalculation.total.toFixed(2)}</div>
-                <div className="text-gray-400 text-sm font-mono">APY: {rewardCalculation.apy}%</div>
-            </div>
-        </div>
-    </div>
-)
-
-// Staking Pools Component
-const StakingPools = ({ stakingPools, setSelectedPool }: any) => {
-    const getStatusColor = (status: string) => {
-        switch (status) {
-            case "Active":
-                return "bg-green-500/20 text-green-400 border-green-500 rounded-full"
-            case "Completed":
-                return "bg-blue-500/20 text-blue-400 border-blue-500 rounded-full"
-            case "Pending":
-                return "bg-yellow-500/20 text-yellow-400 border-yellow-500 rounded-full"
-            default:
-                return "bg-gray-500/20 text-gray-400 border-gray-500 rounded-full"
-        }
-    }
-
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {stakingPools.map((pool: any) => (
-                <div
-                    key={pool.id}
-                    className="bg-secondary/40 rounded-4xl hover:border-cyan-500/50 transition-all duration-300 p-6"
-                >
-                    <div className="mb-4">
-                        <div className="flex justify-between items-start mb-2">
-                            <span className="bg-cyan-500/20 text-cyan-400 px-3 py-1 text-sm font-mono font-bold rounded-4xl">{pool.symbol}</span>
-                            <span className={`px-3 py-1 text-sm font-mono font-bold border ${getStatusColor(pool.status)}`}>
-                                {pool.status.toUpperCase()}
-                            </span>
-                        </div>
-                        <h3 className="text-white text-xl font-bold font-mono mb-2">{pool.name}</h3>
-                    </div>
-                    <div className="space-y-3 mb-4">
-                        <div className="flex justify-between">
-                            <span className="text-gray-400 font-mono">APY</span>
-                            <span className="text-green-400 font-bold flex items-center font-mono">
-                                <Percent className="h-4 w-4 mr-1" />
-                                {pool.apy}%
-                            </span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span className="text-gray-400 font-mono">Total Staked</span>
-                            <span className="text-white font-mono">{pool.totalStaked}</span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span className="text-gray-400 font-mono">Min Stake</span>
-                            <span className="text-white font-mono">
-                                {pool.minStake} {pool.symbol}
-                            </span>
-                        </div>
-                        <div className="flex justify-between">
-                            <span className="text-gray-400 font-mono">Lock Period</span>
-                            <span className="text-white font-mono">{pool.lockPeriod}</span>
-                        </div>
-                    </div>
-                    <button
-                        className="w-full rounded-4xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white px-6 py-3 font-mono font-bold transition-colors border-2 border-cyan-400"
-                        onClick={() => setSelectedPool(pool.id)}
-                    >
-                        Select Pool
-                    </button>
-                </div>
-            ))}
-        </div>
-    )
+type StakingPool = {
+  id: number
+  name: string
+  apy: number
+  minStake: number
+  lockPeriod: string
 }
 
-// User Stakes Portfolio Component
-const UserStakesPortfolio = ({ userStakes }: any) => {
-    const getStatusColor = (status: string) => {
-        switch (status) {
-            case "Active":
-                return "bg-green-500/20 text-green-400 border-green-500 rounded-full"
-            case "Completed":
-                return "bg-blue-500/20 text-blue-400 border-blue-500 rounded-full"
-            case "Pending":
-                return "bg-yellow-500/20 text-yellow-400 border-yellow-500 rounded-full"
-            default:
-                return "bg-gray-500/20 text-gray-400 border-gray-500 rounded-full"
-        }
+export default function StakingDashboard() {
+  const [selectedDAO, setSelectedDAO] = useState("DeFi Protocol DAO")
+  const [stakingAmount, setStakingAmount] = useState("")
+  const [selectedPool, setSelectedPool] = useState<number | null>(null)
+  const [currentStaked, setCurrentStaked] = useState(15000)
+  const [vaultBalance, setVaultBalance] = useState(50000)
+  const [calculatorAmount, setCalculatorAmount] = useState("")
+  const [calculatorPeriod, setCalculatorPeriod] = useState("30")
+
+  const daos = ["DeFi Protocol DAO", "Green Energy DAO", "Gaming Guild DAO"]
+
+  const stakingPools: StakingPool[] = [
+    { id: 1, name: "Flexible Staking", apy: 8.5, minStake: 100, lockPeriod: "No lock" },
+    { id: 2, name: "30-Day Lock", apy: 12.0, minStake: 500, lockPeriod: "30 days" },
+    { id: 3, name: "90-Day Lock", apy: 18.5, minStake: 1000, lockPeriod: "90 days" },
+  ]
+
+  const calculateRewards = () => {
+    const amount = Number.parseFloat(calculatorAmount)
+    const days = Number.parseInt(calculatorPeriod)
+    if (!amount || !days) return 0
+
+    const selectedPoolData = stakingPools.find((p) => p.id === selectedPool)
+    if (!selectedPoolData) return 0
+
+    const dailyRate = selectedPoolData.apy / 365 / 100
+    return amount * dailyRate * days
+  }
+
+  const handleStake = () => {
+    const amount = Number.parseFloat(stakingAmount)
+    if (!isNaN(amount) && amount > 0 && amount <= vaultBalance) {
+      setCurrentStaked(currentStaked + amount)
+      setVaultBalance(vaultBalance - amount)
+      setStakingAmount("")
+      setSelectedPool(null)
     }
+  }
 
-    return (
-        <div className="space-y-6">
-            {userStakes.map((stake: any) => (
-                <div key={stake.id} className="bg-secondary/40 p-6 rounded-4xl">
-                    <div className="mb-4">
-                        <div className="flex justify-between items-start">
-                            <div>
-                                <h3 className="text-white text-xl font-bold font-mono">{stake.pool}</h3>
-                                <p className="text-gray-400 font-mono">Staked on {stake.startDate}</p>
-                            </div>
-                            <span className={`px-3 py-1 text-sm font-mono font-bold border ${getStatusColor(stake.status)}`}>
-                                {stake.status.toUpperCase()}
-                            </span>
-                        </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                        <div className="bg-primary/50  p-4 rounded-lg">
-                            <div className="text-gray-400 text-sm font-mono">Staked Amount</div>
-                            <div className="text-white text-xl font-bold flex items-center font-mono">
-                                <DollarSign className="h-4 w-4 mr-1" />
-                                {stake.amount}
-                            </div>
-                        </div>
-                        <div className="bg-primary/50  p-4 rounded-lg">
-                            <div className="text-gray-400 text-sm font-mono">Rewards Earned</div>
-                            <div className="text-green-400 text-xl font-bold flex items-center font-mono">
-                                <TrendingUp className="h-4 w-4 mr-1" />
-                                {stake.rewards}
-                            </div>
-                        </div>
-                        <div className="bg-primary/50  p-4 rounded-lg">
-                            <div className="text-gray-400 text-sm font-mono">End Date</div>
-                            <div className="text-white text-lg font-semibold font-mono">{stake.endDate}</div>
-                        </div>
-                        <div className="bg-primary/50  p-4 rounded-lg">
-                            <div className="text-gray-400 text-sm font-mono">Total Value</div>
-                            <div className="text-cyan-400 text-xl font-bold font-mono">
-                                {(stake.amount + stake.rewards).toFixed(2)}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="flex gap-2">
-                        <button className="rounded-4xl border-2 border-gray-600 text-gray-300 hover:bg-gray-700 px-4 py-2 font-mono font-bold transition-colors flex items-center">
-                            <Unlock className="mr-2 h-4 w-4" />
-                            Unstake
-                        </button>
-                        <button className="rounded-4xl bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 font-mono font-bold transition-colors border-2 border-green-400">
-                            Claim Rewards
-                        </button>
-                    </div>
-                </div>
-            ))}
+  return (
+    <div className="min-h-screen bg-base-200 py-12 px-6">
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Header with DAO Selector */}
+        <div className="flex justify-between items-center">
+          <h1 className="text-4xl font-bold font-mono">🏦 Staking Dashboard</h1>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0} role="button" className="btn btn-outline font-mono">
+              {selectedDAO} ▼
+            </div>
+            <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+              {daos.map((dao) => (
+                <li key={dao}>
+                  <a onClick={() => setSelectedDAO(dao)} className="font-mono">
+                    {dao}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-    )
-}
 
-// Tab Navigation Component
-const TabNavigation = ({ activeTab, setActiveTab }: any) => {
-    const tabs = [
-        { id: "stake", label: "Stake" },
-        { id: "pools", label: "Pools" },
-        { id: "portfolio", label: "My Stakes" },
-    ]
+        {/* Balance Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-base-100 p-6 rounded-lg shadow-md">
+            <div className="stat">
+              <div className="stat-title font-mono">Vault Balance</div>
+              <div className="stat-value font-mono">${vaultBalance.toLocaleString()}</div>
+              <div className="stat-desc font-mono">Available to stake</div>
+            </div>
+          </div>
+          <div className="bg-base-100 p-6 rounded-lg shadow-md">
+            <div className="stat">
+              <div className="stat-title font-mono">Currently Staked</div>
+              <div className="stat-value text-success font-mono">${currentStaked.toLocaleString()}</div>
+              <div className="stat-desc font-mono">Earning rewards</div>
+            </div>
+          </div>
+          <div className="bg-base-100 p-6 rounded-lg shadow-md">
+            <div className="stat">
+              <div className="stat-title font-mono">Total Rewards</div>
+              <div className="stat-value font-mono">$1,250</div>
+              <div className="stat-desc font-mono">All time earned</div>
+            </div>
+          </div>
+        </div>
 
-    return (
-        <div className="flex w-full bg-secondary/40 rounded-4xl mb-6">
-            {tabs.map((tab) => (
+        {/* Staking Calculator */}
+        <div className="bg-base-100 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold font-mono mb-4">📊 Staking Calculator</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-mono">Amount</span>
+              </label>
+              <input
+                type="number"
+                value={calculatorAmount}
+                onChange={(e) => setCalculatorAmount(e.target.value)}
+                placeholder="Enter amount"
+                className="input input-bordered font-mono"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-mono">Period (days)</span>
+              </label>
+              <input
+                type="number"
+                value={calculatorPeriod}
+                onChange={(e) => setCalculatorPeriod(e.target.value)}
+                placeholder="30"
+                className="input input-bordered font-mono"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-mono">Pool</span>
+              </label>
+              <select
+                value={selectedPool || ""}
+                onChange={(e) => setSelectedPool(Number(e.target.value))}
+                className="select select-bordered font-mono"
+              >
+                <option value="">Select pool</option>
+                {stakingPools.map((pool) => (
+                  <option key={pool.id} value={pool.id}>
+                    {pool.name} ({pool.apy}% APY)
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="bg-success text-success-content p-4 rounded-lg text-center">
+              <div className="font-mono text-sm">Estimated Rewards</div>
+              <div className="font-mono text-xl font-bold">${calculateRewards().toFixed(2)}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Staking Pools */}
+        <div className="bg-base-100 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold font-mono mb-4">🎯 Available Staking Pools</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {stakingPools.map((pool) => (
+              <div key={pool.id} className="border border-base-300 p-4 rounded-lg hover:bg-base-50 transition-colors">
+                <h3 className="font-bold font-mono text-lg">{pool.name}</h3>
+                <div className="space-y-2 mt-2">
+                  <div className="flex justify-between">
+                    <span className="font-mono text-sm">APY:</span>
+                    <span className="font-mono text-sm font-bold text-success">{pool.apy}%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-mono text-sm">Min Stake:</span>
+                    <span className="font-mono text-sm">${pool.minStake}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-mono text-sm">Lock Period:</span>
+                    <span className="font-mono text-sm">{pool.lockPeriod}</span>
+                  </div>
+                </div>
                 <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex-1 px-6 py-3 rounded-4xl font-mono font-bold transition-colors border-r-2 border-gray-700 last:border-r-0 ${activeTab === tab.id ? "bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white" : "text-gray-500 hover:bg-gray-700"
-                        }`}
+                  onClick={() => setSelectedPool(pool.id)}
+                  className={`btn btn-sm w-full mt-3 font-mono ${selectedPool === pool.id ? "btn-primary" : "btn-outline"}`}
                 >
-                    {tab.label.toUpperCase()}
+                  {selectedPool === pool.id ? "Selected" : "Select Pool"}
                 </button>
+              </div>
             ))}
+          </div>
         </div>
-    )
-}
 
-// Main Staking Screen Component
-export default function StakingScreen() {
-    const [stakeAmount, setStakeAmount] = useState("")
-    const [stakingPeriod, setStakingPeriod] = useState("30")
-    const [selectedPool, setSelectedPool] = useState("dao-token")
-    const [activeTab, setActiveTab] = useState("stake")
-
-    const stakingPools = [
-        {
-            id: "dao-token",
-            name: "DAO Token",
-            symbol: "DAO",
-            apy: 12.5,
-            totalStaked: "2.5M",
-            minStake: 100,
-            lockPeriod: "30 days",
-            status: "Active",
-        },
-        {
-            id: "defi-token",
-            name: "DeFi Protocol Token",
-            symbol: "DFI",
-            apy: 18.2,
-            totalStaked: "1.8M",
-            minStake: 50,
-            lockPeriod: "60 days",
-            status: "Active",
-        },
-        {
-            id: "green-token",
-            name: "Green Energy Token",
-            symbol: "GRN",
-            apy: 15.7,
-            totalStaked: "3.2M",
-            minStake: 200,
-            lockPeriod: "90 days",
-            status: "Active",
-        },
-    ]
-
-    const userStakes = [
-        {
-            id: 1,
-            pool: "DAO Token",
-            amount: 1000,
-            rewards: 45.2,
-            startDate: "2024-01-15",
-            endDate: "2024-02-14",
-            status: "Active",
-        },
-        {
-            id: 2,
-            pool: "DeFi Protocol Token",
-            amount: 500,
-            rewards: 12.8,
-            startDate: "2024-01-20",
-            endDate: "2024-03-20",
-            status: "Active",
-        },
-    ]
-
-    const calculateRewards = () => {
-        const amount = Number.parseFloat(stakeAmount) || 0
-        const period = Number.parseInt(stakingPeriod) || 30
-        const selectedPoolData = stakingPools.find((pool) => pool.id === selectedPool)
-        const apy = selectedPoolData?.apy || 0
-
-        const dailyRate = apy / 365 / 100
-        const rewards = amount * dailyRate * period
-
-        return {
-            principal: amount,
-            rewards: rewards,
-            total: amount + rewards,
-            apy: apy,
-        }
-    }
-
-    const rewardCalculation = calculateRewards()
-
-    return (
-        <div className="min-h-screen bg-primary pt-8">
-            <div className="container mx-auto px-4 py-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-4xl font-bold bg-clip-text mb-2 font-mono">
-                        Staking 
-                    </h1>
-                    <p className="text-gray-500 text-lg font-mono">Stake your tokens and earn rewards</p>
-                </div>
-
-                <TabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
-
-                {/* Tab Content */}
-                {activeTab === "stake" && (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 rounded-4xl">
-                        <StakingForm
-                            stakingPools={stakingPools}
-                            selectedPool={selectedPool}
-                            setSelectedPool={setSelectedPool}
-                            stakeAmount={stakeAmount}
-                            setStakeAmount={setStakeAmount}
-                            stakingPeriod={stakingPeriod}
-                            setStakingPeriod={setStakingPeriod}
-                        />
-                        <RewardsCalculator rewardCalculation={rewardCalculation} />
-                    </div>
-                )}
-
-                {activeTab === "pools" && <StakingPools stakingPools={stakingPools} setSelectedPool={setSelectedPool} />}
-
-                {activeTab === "portfolio" && <UserStakesPortfolio userStakes={userStakes} />}
+        {/* Staking Form */}
+        <div className="bg-base-100 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold font-mono mb-4">💰 Stake Funds</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-mono">Amount to Stake</span>
+              </label>
+              <input
+                type="number"
+                value={stakingAmount}
+                onChange={(e) => setStakingAmount(e.target.value)}
+                placeholder="Enter amount"
+                className="input input-bordered font-mono"
+                max={vaultBalance}
+              />
+              <label className="label">
+                <span className="label-text-alt font-mono">Max: ${vaultBalance.toLocaleString()}</span>
+              </label>
             </div>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-mono">Selected Pool</span>
+              </label>
+              <div className="input input-bordered flex items-center font-mono">
+                {selectedPool ? stakingPools.find((p) => p.id === selectedPool)?.name : "No pool selected"}
+              </div>
+            </div>
+            <button
+              onClick={handleStake}
+              disabled={!stakingAmount || !selectedPool || Number.parseFloat(stakingAmount) > vaultBalance}
+              className="btn btn-success font-mono"
+            >
+              🚀 Stake Now
+            </button>
+          </div>
         </div>
-    )
+
+        {/* Current Stakes */}
+        <div className="bg-base-100 p-6 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold font-mono mb-4">📈 Your Active Stakes</h2>
+          <div className="overflow-x-auto">
+            <table className="table table-zebra font-mono">
+              <thead>
+                <tr>
+                  <th>Pool</th>
+                  <th>Amount</th>
+                  <th>APY</th>
+                  <th>Start Date</th>
+                  <th>Unlock Date</th>
+                  <th>Rewards</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>30-Day Lock</td>
+                  <td>$10,000</td>
+                  <td>12.0%</td>
+                  <td>2024-08-01</td>
+                  <td>2024-08-31</td>
+                  <td className="text-success">$98.63</td>
+                  <td>
+                    <button className="btn btn-xs btn-outline font-mono">Unstake</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Flexible Staking</td>
+                  <td>$5,000</td>
+                  <td>8.5%</td>
+                  <td>2024-07-15</td>
+                  <td>Anytime</td>
+                  <td className="text-success">$156.25</td>
+                  <td>
+                    <button className="btn btn-xs btn-success font-mono">Unstake</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
