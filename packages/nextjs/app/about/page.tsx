@@ -2,112 +2,138 @@
 
 export default function AboutPage() {
     return (
-        <div className="min-h-screen bg-base-200 py-12 px-6">
-            <div className="max-w-5xl mx-auto">
+        <div className="min-h-screen bg-base-200 py-16 px-6">
+            <div className="max-w-6xl mx-auto space-y-16">
                 {/* Hero Section */}
-                <div className="text-center mb-12">
-                    <h1 className="text-5xl font-bold font-mono mb-4">Welcome to DaoForge</h1>
-                    <p className="text-lg text-base-content/70 font-mono">
-                        The ultimate toolkit for building, governing, and scaling decentralized autonomous organizations.
+                <div className="text-center">
+                    <h1 className="text-6xl font-bold font-mono text-primary mb-6">
+                        Welcome to DaoForge
+                    </h1>
+                    <p className="text-lg text-base-content/70 font-mono max-w-3xl mx-auto">
+                        A modular platform for launching, managing, and scaling DAOs with clarity, transparency, and real governance.
                     </p>
                 </div>
 
-                <div className="space-y-10 font-mono">
-                    {/* What is DaoForge */}
-                    <div className="card bg-base-100 shadow-md">
+                <div className="space-y-12 font-mono">
+                    {/* Overview */}
+                    <div className="card bg-base-100 shadow-lg">
                         <div className="card-body">
-                            <h2 className="card-title text-xl font-bold">🔧 What is DaoForge?</h2>
+                            <h2 className="card-title text-2xl font-bold text-accent">🔍 Overview</h2>
                             <p>
-                                DaoForge is a macro-tool designed to unify the core pillars of DAO infrastructure into one seamless experience. It’s not just a dashboard—it’s a launchpad for decentralized coordination. Whether you're a grassroots collective or a protocol-level DAO, DaoForge gives you the tools to:
+                                DaoForge streamlines the core operations of decentralized autonomous organizations. Whether you're starting a new DAO or contributing to an existing one, DaoForge provides the infrastructure to coordinate tasks, manage funds, and govern effectively.
                             </p>
-                            <ul className="list-disc list-inside mt-2 space-y-1">
-                                <li>💰 Manage treasury funds with transparency</li>
-                                <li>🧑‍💼 Post and fulfill tasks, bounties, and jobs</li>
-                                <li>🗳️ Propose and vote on governance decisions</li>
-                                <li>📈 Stake assets to grow your treasury</li>
-                                <li>📅 Host and promote community events</li>
+                        </div>
+                    </div>
+
+                    {/* Core Modules */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-secondary">🏁 Start</h2>
+                                <p>Select an existing DAO or create a new one. Setup is fast, intuitive, and role-based from the start.</p>
+                            </div>
+                        </div>
+
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-info">📋 Tasks</h2>
+                                <p>
+                                    Admins create tasks. Members can accept them to earn rewards. Once completed, contributors submit proof (e.g. repo link), and Auditors validate the work. Upon approval, payments are released automatically.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-warning">🗳️ Governance</h2>
+                                <p>
+                                    Immutable voting mechanisms allow DAOs to make transparent, on-chain decisions. Every proposal follows a clear lifecycle: creation, discussion, voting, and execution.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-success">💰 Treasury</h2>
+                                <p>
+                                    Monitor and manage DAO funds with precision. View balances, track transactions, and configure automated payouts tied to tasks or governance outcomes.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-primary">📅 Events</h2>
+                                <p>
+                                    Organize and promote DAO events—from community calls to hackathons. Track participation and link events to contributor rewards.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-error">🛠️ Admin Panel</h2>
+                                <p>
+                                    Admins have access to task creation, member management, treasury controls, and governance tools—all in one unified dashboard.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="card bg-base-100 shadow-md">
+                            <div className="card-body">
+                                <h2 className="card-title text-xl font-bold text-accent">🔍 Auditor Panel</h2>
+                                <p>
+                                    Auditors review submitted tasks, validate deliverables, and approve or reject contributions. Their role ensures quality and fair compensation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Technologies */}
+                    <div className="card bg-base-100 shadow-lg">
+                        <div className="card-body">
+                            <h2 className="card-title text-2xl font-bold text-info">🧪 Technologies Used</h2>
+                            <p>
+                                DaoForge is built on a robust, multi-chain architecture designed for speed, flexibility, and security:
+                            </p>
+                            <ul className="list-disc list-inside mt-4 space-y-2">
+                                <li>⚙️ <span className="font-bold">Scaffold ETH 2</span> — rapid dApp development framework</li>
+                                <li>⚡ <span className="font-bold">Solana</span> — fast execution for contributor tasks</li>
+                                <li>🔄 <span className="font-bold">Circle</span> — stablecoin payments and treasury operations</li>
+                                <li>🔗 <span className="font-bold">Other integrations</span> — modular support for future protocols</li>
                             </ul>
                         </div>
                     </div>
 
-                    {/* Justification */}
-                    <div className="card bg-base-100 shadow-md">
+                    {/* Future Plans */}
+                    <div className="card bg-base-100 shadow-lg">
                         <div className="card-body">
-                            <h2 className="card-title text-xl font-bold">📚 Why DaoForge?</h2>
+                            <h2 className="card-title text-2xl font-bold text-success">🚀 Roadmap</h2>
                             <p>
-                                DAOs today face fragmentation. Treasury tools live in one place, governance in another, and contributor workflows are often disconnected. This leads to inefficiency, confusion, and missed opportunities for engagement.
+                                DaoForge is evolving. Upcoming features include:
                             </p>
-                            <p className="mt-2">
-                                DaoForge solves this by offering a unified interface that’s modular, scalable, and intuitive. It’s built for contributors, governors, and builders alike—bridging the gap between vision and execution.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Mission & Vision */}
-                    <div className="card bg-base-100 shadow-md">
-                        <div className="card-body">
-                            <h2 className="card-title text-xl font-bold">🎯 Mission & Vision</h2>
-                            <p>
-                                Our mission is to empower decentralized communities with infrastructure that rivals traditional organizations—without sacrificing autonomy or transparency.
-                            </p>
-                            <p className="mt-2">
-                                Our vision is a world where DAOs are the default structure for collaboration, funding, and innovation. DaoForge is the bridge to that future.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Tech Stack */}
-                    <div className="card bg-base-100 shadow-md">
-                        <div className="card-body">
-                            <h2 className="card-title text-xl font-bold">🧪 Built With</h2>
-                            <p>
-                                DaoForge is built on Scaffold ETH 2, a powerful framework for rapid dApp development. Our stack includes:
-                            </p>
-                            <ul className="list-disc list-inside mt-2 space-y-1">
-                                <li>🔄 <span className="font-bold">Circle</span> — for stablecoin payments and treasury operations</li>
-                                <li>⚡ <span className="font-bold">Solana</span> — for fast, low-cost execution of contributor tasks</li>
-                                <li>🌀 <span className="font-bold">Arbitrum</span> — for scalable Layer 2 governance and voting</li>
-                                <li>🌐 <span className="font-bold">Worldcoin</span> — for identity verification and proof-of-personhood</li>
-                                <li>🛠️ <span className="font-bold">RainbowKit & Wagmi</span> — for wallet integration and UX excellence</li>
+                            <ul className="list-disc list-inside mt-4 space-y-2">
+                                <li>⚖️ Integration with <span className="font-bold">Kleros</span> for decentralized dispute resolution</li>
+                                <li>📊 Addition of <span className="font-bold">DeFi modules</span> for treasury yield strategies</li>
+                                <li>🧠 Deployment of <span className="font-bold">AI tools</span> for task matching and contributor insights</li>
                             </ul>
                             <p className="mt-4">
-                                This multi-chain, multi-tool architecture ensures flexibility, speed, and security across all DAO operations.
+                                Our roadmap is shaped by real DAO needs. DaoForge grows with its community.
                             </p>
                         </div>
                     </div>
 
-                    {/* Roadmap */}
-                    <div className="card bg-base-100 shadow-md">
-                        <div className="card-body">
-                            <h2 className="card-title text-xl font-bold">🚀 Roadmap & Future Plans</h2>
-                            <p>
-                                DaoForge is just getting started. Here’s what’s coming next:
-                            </p>
-                            <ul className="list-disc list-inside mt-2 space-y-1">
-                                <li>🧠 AI-powered proposal drafting and DAO analytics</li>
-                                <li>📲 Mobile-first contributor experience</li>
-                                <li>🌍 Multi-chain DAO deployment (Polygon, Base, Optimism)</li>
-                                <li>🔐 ZK-based voting and privacy-preserving governance</li>
-                                <li>🧩 Plugin system for custom modules and DAO extensions</li>
-                                <li>📡 Real-time notifications and contributor reputation scoring</li>
-                            </ul>
-                            <p className="mt-4">
-                                Our roadmap is shaped by the needs of the community. DaoForge evolves with you.
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Closing Statement */}
-                    <div className="card bg-base-100 shadow-md border border-info">
+                    {/* CTA */}
+                    <div className="card bg-base-100 shadow-lg border border-info">
                         <div className="card-body text-center">
-                            <h2 className="text-xl font-bold">🌐 Join the Movement</h2>
+                            <h2 className="text-2xl font-bold text-primary">🌐 Join the Movement</h2>
                             <p className="text-base-content/70 mt-2">
-                                DaoForge isn’t just a platform—it’s a philosophy. A belief that decentralized collaboration can be powerful, elegant, and scalable.
+                                DaoForge is more than a platform—it’s a commitment to decentralized collaboration done right.
                             </p>
                             <p className="mt-2">
                                 Whether you're launching your first DAO or scaling a global network, DaoForge is your foundation.
                             </p>
-                            <button className="btn btn-primary mt-4">Launch Your DAO</button>
+                            <button className="btn btn-primary btn-wide mt-6">Launch Your DAO</button>
                         </div>
                     </div>
                 </div>
