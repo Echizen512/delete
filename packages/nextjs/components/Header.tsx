@@ -53,6 +53,11 @@ export const menuLinks: HeaderMenuLink[] = [
     icon: <BugAntIcon className="h-4 w-4" />, // Changed icon
   },
   {
+    label: "Staking",
+    href: "/staking",
+    icon: <BugAntIcon className="h-4 w-4" />, // Changed icon
+  },
+  {
     label: "About",
     href: "/about",
     icon: <ClipboardDocumentListIcon className="h-4 w-4" />, // Changed icon
