@@ -25,6 +25,7 @@
     "burner-connector": "0.0.16",
     "daisyui": "5.0.9",
     "kubo-rpc-client": "~5.0.2",
+    "motion": "^12.23.12",
     "next": "~15.2.3",
     "next-nprogress-bar": "~2.3.13",
     "next-themes": "~0.3.0",
