@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
@@ -16,7 +16,29 @@ type Coin3DProps = {
 export const Coin3d: React.FC<Coin3DProps> = ({ coinName, className, appearanceRight = false }) => {
   const mountRef = useRef<HTMLDivElement>(null);
 
+  //states
+  const [coinScale, setCoinScale] = useState({ x: 1.4, y: 1.4, z: 1.4 });
+
+  //functions
+  const handleResize = (renderer: THREE.WebGLRenderer) => {
+    if (innerWidth < 640) {
+      renderer.setSize(180, 180);
+    } else if (innerWidth >= 640 && innerWidth <= 768) {
+      renderer.setSize(200, 200);
+    } else if (innerWidth > 768 && innerWidth <= 1024) {
+      renderer.setSize(250, 250);
+    } else if (innerWidth > 1024 && innerWidth <= 1536) {
+      setCoinScale({ x: 1.1, y: 1.1, z: 1.1 });
+      renderer.setSize(300, 300);
+    } else {
+      setCoinScale({ x: 1.5, y: 1.5, z: 1.5 });
+      renderer.setSize(300, 300);
+    }
+  };
+
+  //effects
   useEffect(() => {
+    console.log(innerWidth);
     const container = mountRef.current;
 
     const scene = new THREE.Scene();
@@ -26,9 +48,9 @@ export const Coin3d: React.FC<Coin3DProps> = ({ coinName, className, appearanceR
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(devicePixelRatio);
 
-    renderer.setSize(350, 350);
+    handleResize(renderer);
 
     renderer.setClearColor(0x000000, 0);
     container?.appendChild(renderer.domElement);
@@ -49,7 +71,7 @@ export const Coin3d: React.FC<Coin3DProps> = ({ coinName, className, appearanceR
     loader.load(
       `models/${coinName}.glb`,
       function (gltf) {
-        gltf.scene.scale.set(0.8, 0.8, 0.8);
+        gltf.scene.scale.set(coinScale.x, coinScale.y, coinScale.z);
         gltf.scene.rotation.set(Math.PI / 2, THREE.MathUtils.degToRad(270), 0);
         gltf.scene.position.y = -3;
         gltf.scene.position.x = appearanceRight ? -3 : 3;
@@ -95,11 +117,14 @@ export const Coin3d: React.FC<Coin3DProps> = ({ coinName, className, appearanceR
     };
     renderer.setAnimationLoop(animate);
 
+    addEventListener("resize", () => handleResize(renderer));
+
     return () => {
       renderer.dispose();
       container?.removeChild(renderer.domElement);
+      removeEventListener("resize", () => handleResize(renderer));
     };
-  }, [appearanceRight, coinName]);
+  }, [appearanceRight, coinName, coinScale.x, coinScale.y, coinScale.z]);
 
   return <div ref={mountRef} className={cn("absolute bg-transparent top-0", className)} />;
 };
