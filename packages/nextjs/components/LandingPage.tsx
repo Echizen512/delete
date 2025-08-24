@@ -1,5 +1,6 @@
 "use client";
 
+import { Coin3d } from "./Coin3d";
 import { CreateParticles } from "./CreateParticles";
 import { RainbowKitCustomConnectButton } from "./scaffold-eth";
 import GradientText from "./ui/GradientText";
@@ -22,6 +23,12 @@ export const LandingPage = () => {
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-base-100/40 z-10" />
+
+      {/* Coins3D */}
+      <Coin3d coinName="solana" className="z-20" appearanceRight={true} />
+      <div className="w-full flex justify-end">
+        <Coin3d coinName="usdc" className="z-20" />
+      </div>
 
       {/* Hero Section */}
       <section className="h-screen w-screen flex justify-center items-center flex-col">
@@ -89,7 +96,7 @@ export const LandingPage = () => {
                 className="card bg-base-200 border border-primary/30 shadow-md hover:border-primary transition-transform hover:scale-105"
               >
                 <div className="card-body items-center text-center">
-                  {x.icon}
+                  <x.icon className="size-10" />
                   <h3 className="card-title text-base-content font-mono">{x.title}</h3>
                   <p className="text-base-content/70 font-mono text-sm">{x.desc}</p>
                 </div>
