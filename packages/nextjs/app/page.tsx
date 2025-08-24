@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import CreateDAOModal from "./dao/CreateDAOModal";
+import CreateDAOModal from "./_components/CreateDAOModal";
 import DAODetailModal from "./dao/DAODetailModal";
 import JoinDAOModal from "./dao/JoinDAOModal";
+import { Plus } from "lucide-react";
 import type { NextPage } from "next";
 import { ButtonAnimateText } from "~~/components/ButtonAnimateText";
 import { DAO_CATEGORIES } from "~~/constants/daoCategories";
-import { Plus } from "lucide-react";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth/useScaffoldReadContract";
 
 type DAO = {
   id: number;
@@ -20,51 +21,59 @@ type DAO = {
 };
 
 const Home: NextPage = () => {
+  //states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDAO, setSelectedDAO] = useState<DAO | null>(null);
   const [viewDAO, setViewDAO] = useState<DAO | null>(null);
 
-  const daos: DAO[] = [
-    {
-      id: 1,
-      name: "DeFi Protocol DAO",
-      description: "Governing the future of decentralized finance protocols",
-      members: 1250,
-      treasury: "$2.5M",
-      category: "DeFi",
-      status: "Active",
-    },
-    {
-      id: 2,
-      name: "NFT Creators Collective",
-      description: "Supporting digital artists and NFT creators worldwide",
-      members: 890,
-      treasury: "$850K",
-      category: "NFT",
-      status: "Active",
-    },
-    {
-      id: 3,
-      name: "Green Energy DAO",
-      description: "Funding renewable energy projects through blockchain",
-      members: 2100,
-      treasury: "$5.2M",
-      category: "Environment",
-      status: "Active",
-    },
-    {
-      id: 4,
-      name: "Gaming Guild DAO",
-      description: "Play-to-earn gaming community and asset management",
-      members: 3400,
-      treasury: "$1.8M",
-      category: "Gaming",
-      status: "Active",
-    },
-  ];
+  //smart contracts
 
-  const filteredDAOs = daos.filter(dao => {
+  const { data: daos } = useScaffoldReadContract({
+    contractName: "DaoForgeFabric",
+    functionName: "showDaos",
+  });
+
+  // const daos: DAO[] = [
+  //   {
+  //     id: 1,
+  //     name: "DeFi Protocol DAO",
+  //     description: "Governing the future of decentralized finance protocols",
+  //     members: 1250,
+  //     treasury: "$2.5M",
+  //     category: "DeFi",
+  //     status: "Active",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "NFT Creators Collective",
+  //     description: "Supporting digital artists and NFT creators worldwide",
+  //     members: 890,
+  //     treasury: "$850K",
+  //     category: "NFT",
+  //     status: "Active",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Green Energy DAO",
+  //     description: "Funding renewable energy projects through blockchain",
+  //     members: 2100,
+  //     treasury: "$5.2M",
+  //     category: "Environment",
+  //     status: "Active",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Gaming Guild DAO",
+  //     description: "Play-to-earn gaming community and asset management",
+  //     members: 3400,
+  //     treasury: "$1.8M",
+  //     category: "Gaming",
+  //     status: "Active",
+  //   },
+  // ];
+
+  const filteredDAOs = daos?.filter(dao => {
     const matchesSearch =
       dao.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       dao.description.toLowerCase().includes(searchTerm.toLowerCase());
@@ -115,26 +124,26 @@ const Home: NextPage = () => {
 
         {/* DAO Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredDAOs.map(dao => (
-            <div key={dao.id} className="card bg-base-100 shadow-xl">
+          {filteredDAOs?.map(dao => (
+            <div key={dao.daoAddress} className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <div className="flex justify-between mb-2">
                   <span className="badge badge-primary">{dao.category}</span>
-                  <span className="badge badge-success">{dao.status}</span>
+                  {/* <span className="badge badge-success">{dao.status}</span> */}
                 </div>
                 <h2 className="card-title">{dao.name}</h2>
                 <p className="text-sm">{dao.description}</p>
                 <div className="flex justify-between text-sm mt-4">
-                  <span>👥 {dao.members} members</span>
-                  <span>💰 {dao.treasury}</span>
+                  {/* <span>👥 {dao.members} members</span> */}
+                  {/* <span>💰 {dao.treasury}</span> */}
                 </div>
                 <div className="card-actions mt-4 justify-between">
-                  <button onClick={() => setSelectedDAO(dao)} className="btn btn-primary btn-sm">
+                  {/* <button onClick={() => setSelectedDAO(dao)} className="btn btn-primary btn-sm">
                     JOIN DAO
-                  </button>
-                  <button onClick={() => setViewDAO(dao)} className="btn btn-outline btn-sm">
+                  </button> */}
+                  {/* <button onClick={() => setViewDAO(dao)} className="btn btn-outline btn-sm">
                     VIEW
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
@@ -142,11 +151,12 @@ const Home: NextPage = () => {
         </div>
 
         {/* Empty State */}
-        {filteredDAOs.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-base-content/60 text-lg font-mono">🚫 No DAOs found matching your criteria</p>
-          </div>
-        )}
+        {filteredDAOs === undefined ||
+          (filteredDAOs.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-base-content/60 text-lg font-mono">🚫 No DAOs found matching your criteria</p>
+            </div>
+          ))}
       </div>
 
       {selectedDAO && (

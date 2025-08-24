@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Rocket, X } from "lucide-react";
 import { DAO_CATEGORIES } from "~~/constants/daoCategories";
+import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
 
 const CreateDAOModal = () => {
   //states
@@ -12,10 +13,24 @@ const CreateDAOModal = () => {
   // const [treasury, setTreasury] = useState("");
   const [isCreating, setIsCreating] = useState<boolean>(false);
 
+  //smart contract
+  const { writeContractAsync: writeDaoForgeFabricAsync } = useScaffoldWriteContract({ contractName: "DaoForgeFabric" });
+
   //functions
   const handleSubmit = async () => {
     try {
       setIsCreating(true);
+
+      await writeDaoForgeFabricAsync({
+        functionName: "createDao",
+        args: [name, description, category],
+        // value: parseEther("0.1"),
+      });
+
+      setName("");
+      setDescription("");
+      setCategory("DeFi");
+      document.getElementById("btn-close-modal")?.click();
     } catch (err) {
       console.log(err);
     } finally {
@@ -27,7 +42,7 @@ const CreateDAOModal = () => {
     <dialog id="my_modal_3" className="modal">
       <div className="modal-box">
         <form method="dialog">
-          <button className="btn btn-sm btn-circle btn-primary absolute right-2 top-2">
+          <button id="btn-close-modal" className="btn btn-sm btn-circle btn-primary absolute right-2 top-2">
             <X className="w-4 h-4" />
           </button>
         </form>
