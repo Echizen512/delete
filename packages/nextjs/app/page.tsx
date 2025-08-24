@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CreateDAOModal from "./_components/CreateDAOModal";
+import { DaoPreviewCard } from "./_components/DaoPreviewCard";
 import DAODetailModal from "./dao/DAODetailModal";
 import JoinDAOModal from "./dao/JoinDAOModal";
 import { Plus } from "lucide-react";
@@ -28,7 +29,6 @@ const Home: NextPage = () => {
   const [viewDAO, setViewDAO] = useState<DAO | null>(null);
 
   //smart contracts
-
   const { data: daos } = useScaffoldReadContract({
     contractName: "DaoForgeFabric",
     functionName: "showDaos",
@@ -85,7 +85,8 @@ const Home: NextPage = () => {
     <main className="min-h-screen bg-base-200 mt-4">
       {/* Modals */}
       <CreateDAOModal />
-      <div className="container mx-auto">
+
+      <section className="container mx-auto">
         {/* Button Create DAO */}
         <div className="w-full flex flex-col justify-center items-center my-4">
           <ButtonAnimateText
@@ -101,6 +102,7 @@ const Home: NextPage = () => {
             Join decentralized organizations that match your interests.
           </p>
         </div>
+
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <input
             type="text"
@@ -124,29 +126,36 @@ const Home: NextPage = () => {
 
         {/* DAO Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredDAOs?.map(dao => (
-            <div key={dao.daoAddress} className="card bg-base-100 shadow-xl">
-              <div className="card-body">
-                <div className="flex justify-between mb-2">
-                  <span className="badge badge-primary">{dao.category}</span>
-                  {/* <span className="badge badge-success">{dao.status}</span> */}
-                </div>
-                <h2 className="card-title">{dao.name}</h2>
-                <p className="text-sm">{dao.description}</p>
-                <div className="flex justify-between text-sm mt-4">
-                  {/* <span>👥 {dao.members} members</span> */}
-                  {/* <span>💰 {dao.treasury}</span> */}
-                </div>
-                <div className="card-actions mt-4 justify-between">
-                  {/* <button onClick={() => setSelectedDAO(dao)} className="btn btn-primary btn-sm">
-                    JOIN DAO
-                  </button> */}
-                  {/* <button onClick={() => setViewDAO(dao)} className="btn btn-outline btn-sm">
-                    VIEW
-                  </button> */}
-                </div>
-              </div>
-            </div>
+          {filteredDAOs?.map((x, y: number) => (
+            <DaoPreviewCard
+              key={y}
+              name={x.name}
+              address={x.daoAddress}
+              description={x.description}
+              category={x.category}
+            />
+            // <div key={dao.daoAddress} className="card bg-base-100 shadow-xl">
+            //   <div className="card-body">
+            //     <div className="flex justify-between mb-2">
+            //       <span className="badge badge-primary">{dao.category}</span>
+            //       {/* <span className="badge badge-success">{dao.status}</span> */}
+            //     </div>
+            //     <h2 className="card-title">{dao.name}</h2>
+            //     <p className="text-sm">{dao.description}</p>
+            //     <div className="flex justify-between text-sm mt-4">
+            //       {/* <span>👥 {dao.members} members</span> */}
+            //       {/* <span>💰 {dao.treasury}</span> */}
+            //     </div>
+            //     <div className="card-actions mt-4 justify-between">
+            //       {/* <button onClick={() => setSelectedDAO(dao)} className="btn btn-primary btn-sm">
+            //         JOIN DAO
+            //       </button> */}
+            //       {/* <button onClick={() => setViewDAO(dao)} className="btn btn-outline btn-sm">
+            //         VIEW
+            //       </button> */}
+            //     </div>
+            //   </div>
+            // </div>
           ))}
         </div>
 
@@ -157,7 +166,7 @@ const Home: NextPage = () => {
               <p className="text-base-content/60 text-lg font-mono">🚫 No DAOs found matching your criteria</p>
             </div>
           ))}
-      </div>
+      </section>
 
       {selectedDAO && (
         <JoinDAOModal
