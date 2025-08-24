@@ -11,14 +11,13 @@ export const CreateParticles = () => {
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    // const rect = canvas.getBoundingClientRect();
 
     const setCanvasSize = () => {
       const rect = canvas.getBoundingClientRect();
 
-      canvas.width = rect.width * dpr;
+      canvas.width = innerWidth * dpr;
       canvas.height = rect.height * dpr;
-      canvas.style.width = `${rect.width}px`;
+      canvas.style.width = `${innerWidth}px`;
       canvas.style.height = `${rect.height}px`;
 
       ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -246,6 +245,7 @@ export const CreateParticles = () => {
         }
         ctx.restore();
       });
+
       gridLines.forEach(line => {
         line.opacity -= line.fadeSpeed;
         if (line.opacity <= 0) {
@@ -262,6 +262,7 @@ export const CreateParticles = () => {
         ctx.lineTo(line.x2, line.y2);
         ctx.stroke();
       });
+
       const cornerSize = 40;
       const cornerOpacity = 0.4 + 0.2 * Math.sin(time * 2);
       const corners: [number, number, number, number, number, number][] = [
@@ -286,7 +287,6 @@ export const CreateParticles = () => {
 
     animate();
     const handleResize = () => {
-      console.log("resize");
       setCanvasSize();
       createParticles();
       createGridLines();
