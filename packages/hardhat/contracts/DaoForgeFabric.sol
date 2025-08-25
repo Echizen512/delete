@@ -34,7 +34,7 @@ contract DaoForgeFabric is Ownable {
             "empty fields"
         );
 
-        DaoForge newDao = new DaoForge(address(this));
+        DaoForge newDao = new DaoForge(address(this), msg.sender);
         daos[daoCounter] = Dao(msg.sender, _name, _description, _category, address(newDao));
         daoCounter++;
     }

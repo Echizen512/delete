@@ -12,6 +12,7 @@ type DaoPreviewCardProps = {
   showModalJoinDao: (address: string) => void;
 };
 
+//TODO: falta agregar cuanto tienen en el vault y tambien poner el address del creador para que la card no este tan vacia
 export const DaoPreviewCard: React.FC<DaoPreviewCardProps> = ({
   address,
   name,
