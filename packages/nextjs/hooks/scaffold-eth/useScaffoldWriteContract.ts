@@ -59,8 +59,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
     typeof configOrName === "string"
       ? { contractName: configOrName, writeContractParams, chainId: undefined }
       : (configOrName as UseScaffoldWriteConfig<TContractName>);
-  const { contractName, chainId, writeContractParams: finalWriteContractParams } = finalConfig;
-
+  const { contractName, chainId, contractAddress, writeContractParams: finalWriteContractParams } = finalConfig;
   const wagmiConfig = useConfig();
 
   useEffect(() => {
@@ -76,7 +75,6 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
   const [isMining, setIsMining] = useState(false);
 
   const wagmiContractWrite = useWriteContract(finalWriteContractParams);
-
   const selectedNetwork = useSelectedNetwork(chainId);
 
   const { data: deployedContractData } = useDeployedContractInfo({
@@ -111,7 +109,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
 
       const writeContractObject = {
         abi: deployedContractData.abi as Abi,
-        address: deployedContractData.address,
+        address: contractAddress ?? deployedContractData.address,
         ...variables,
       } as WriteContractVariables<Abi, string, any[], Config, number>;
 
@@ -165,7 +163,7 @@ export function useScaffoldWriteContract<TContractName extends ContractName>(
     wagmiContractWrite.writeContract(
       {
         abi: deployedContractData.abi as Abi,
-        address: deployedContractData.address,
+        address: contractAddress ?? deployedContractData.address,
         ...variables,
       } as WriteContractVariables<Abi, string, any[], Config, number>,
       options as

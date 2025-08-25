@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import DAODetailModal from "../../app/dao/DAODetailModal";
-import JoinDAOModal from "../../app/dao/JoinDAOModal";
 import { FaucetButton } from "../scaffold-eth/FaucetButton";
 import { RainbowKitCustomConnectButton } from "../scaffold-eth/RainbowKitCustomConnectButton";
 import CreateDAOModal from "./_components/CreateDAOModal";
 import { DaoPreviewCard } from "./_components/DaoPreviewCard";
+import { JoinDAOModal } from "./_components/JoinDAOModal";
 import { Plus } from "lucide-react";
 import { hardhat } from "viem/chains";
 import { ButtonAnimateText } from "~~/components/ButtonAnimateText";
@@ -24,60 +24,74 @@ type DAO = {
   status: string;
 };
 
+// const daos: DAO[] = [
+//   {
+//     id: 1,
+//     name: "DeFi Protocol DAO",
+//     description: "Governing the future of decentralized finance protocols",
+//     members: 1250,
+//     treasury: "$2.5M",
+//     category: "DeFi",
+//     status: "Active",
+//   },
+//   {
+//     id: 2,
+//     name: "NFT Creators Collective",
+//     description: "Supporting digital artists and NFT creators worldwide",
+//     members: 890,
+//     treasury: "$850K",
+//     category: "NFT",
+//     status: "Active",
+//   },
+//   {
+//     id: 3,
+//     name: "Green Energy DAO",
+//     description: "Funding renewable energy projects through blockchain",
+//     members: 2100,
+//     treasury: "$5.2M",
+//     category: "Environment",
+//     status: "Active",
+//   },
+//   {
+//     id: 4,
+//     name: "Gaming Guild DAO",
+//     description: "Play-to-earn gaming community and asset management",
+//     members: 3400,
+//     treasury: "$1.8M",
+//     category: "Gaming",
+//     status: "Active",
+//   },
+// ];
+
 export const DaoList: React.FC = () => {
   const { targetNetwork } = useTargetNetwork();
   const isLocalNetwork = targetNetwork.id === hardhat.id;
 
   //states
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedDAO, setSelectedDAO] = useState<DAO | null>(null);
   const [viewDAO, setViewDAO] = useState<DAO | null>(null);
-
+  const [selectedAdress, setSelectedAdress] = useState<string | undefined>(undefined);
   //smart contracts
+
   const { data: daos } = useScaffoldReadContract({
     contractName: "DaoForgeFabric",
     functionName: "showDaos",
   });
 
-  // const daos: DAO[] = [
-  //   {
-  //     id: 1,
-  //     name: "DeFi Protocol DAO",
-  //     description: "Governing the future of decentralized finance protocols",
-  //     members: 1250,
-  //     treasury: "$2.5M",
-  //     category: "DeFi",
-  //     status: "Active",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "NFT Creators Collective",
-  //     description: "Supporting digital artists and NFT creators worldwide",
-  //     members: 890,
-  //     treasury: "$850K",
-  //     category: "NFT",
-  //     status: "Active",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Green Energy DAO",
-  //     description: "Funding renewable energy projects through blockchain",
-  //     members: 2100,
-  //     treasury: "$5.2M",
-  //     category: "Environment",
-  //     status: "Active",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Gaming Guild DAO",
-  //     description: "Play-to-earn gaming community and asset management",
-  //     members: 3400,
-  //     treasury: "$1.8M",
-  //     category: "Gaming",
-  //     status: "Active",
-  //   },
-  // ];
+  //functions
+  const showModalCreateDao = () => {
+    const modal = document.getElementById("modal_create_dao") as HTMLDialogElement | null;
+    if (modal) modal.showModal();
+  };
+
+  const showModalJoinDao = (address: string) => {
+    const modal = document.getElementById("modal_join_dao") as HTMLDialogElement | null;
+    if (modal) {
+      setSelectedAdress(address);
+      modal.showModal();
+    }
+  };
 
   const filteredDAOs = daos?.filter(dao => {
     const matchesSearch =
@@ -108,6 +122,7 @@ export const DaoList: React.FC = () => {
 
       {/* Modals */}
       <CreateDAOModal />
+      <JoinDAOModal contractAddress={selectedAdress} />
 
       <section className="container mx-auto pt-5">
         {/* Button Create DAO */}
@@ -115,6 +130,7 @@ export const DaoList: React.FC = () => {
           <ButtonAnimateText
             icon={<Plus className="w-4 h-4" />}
             texts={["Bring your idea to life", "Turn your vision into a DAO", "Make history: launch your DAO"]}
+            onClickFunction={showModalCreateDao}
           />
         </div>
 
@@ -156,29 +172,8 @@ export const DaoList: React.FC = () => {
               address={x.daoAddress}
               description={x.description}
               category={x.category}
+              showModalJoinDao={showModalJoinDao}
             />
-            // <div key={dao.daoAddress} className="card bg-base-100 shadow-xl">
-            //   <div className="card-body">
-            //     <div className="flex justify-between mb-2">
-            //       <span className="badge badge-primary">{dao.category}</span>
-            //       {/* <span className="badge badge-success">{dao.status}</span> */}
-            //     </div>
-            //     <h2 className="card-title">{dao.name}</h2>
-            //     <p className="text-sm">{dao.description}</p>
-            //     <div className="flex justify-between text-sm mt-4">
-            //       {/* <span>👥 {dao.members} members</span> */}
-            //       {/* <span>💰 {dao.treasury}</span> */}
-            //     </div>
-            //     <div className="card-actions mt-4 justify-between">
-            //       {/* <button onClick={() => setSelectedDAO(dao)} className="btn btn-primary btn-sm">
-            //         JOIN DAO
-            //       </button> */}
-            //       {/* <button onClick={() => setViewDAO(dao)} className="btn btn-outline btn-sm">
-            //         VIEW
-            //       </button> */}
-            //     </div>
-            //   </div>
-            // </div>
           ))}
         </div>
 
@@ -191,16 +186,6 @@ export const DaoList: React.FC = () => {
           ))}
       </section>
 
-      {selectedDAO && (
-        <JoinDAOModal
-          dao={selectedDAO}
-          onConfirm={() => {
-            console.log("Joined DAO:", selectedDAO.name);
-            setSelectedDAO(null);
-          }}
-          onClose={() => setSelectedDAO(null)}
-        />
-      )}
       {viewDAO && <DAODetailModal dao={viewDAO} onClose={() => setViewDAO(null)} />}
     </main>
   );

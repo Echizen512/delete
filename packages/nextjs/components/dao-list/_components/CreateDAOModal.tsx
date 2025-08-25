@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Rocket, X } from "lucide-react";
 import { DAO_CATEGORIES } from "~~/constants/daoCategories";
@@ -39,7 +37,7 @@ const CreateDAOModal = () => {
   };
 
   return (
-    <dialog id="my_modal_3" className="modal">
+    <dialog id="modal_create_dao" className="modal">
       <div className="modal-box">
         <form method="dialog">
           <button id="btn-close-modal" className="btn btn-sm btn-circle btn-primary absolute right-2 top-2">

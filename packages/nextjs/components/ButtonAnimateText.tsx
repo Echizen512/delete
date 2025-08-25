@@ -6,21 +6,12 @@ type ButtonAnimateTextProps = {
   icon: ReactNode;
   texts: string[];
   buttonStyles?: string;
+  onClickFunction: () => void;
 };
 
-export const ButtonAnimateText = ({ icon, texts, buttonStyles }: ButtonAnimateTextProps) => {
+export const ButtonAnimateText = ({ icon, texts, buttonStyles, onClickFunction }: ButtonAnimateTextProps) => {
   return (
-    <button
-      className={cn("btn btn-primary max-w-md", buttonStyles)}
-      onClick={() => {
-        const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
-        if (modal) {
-          modal.showModal();
-        } else {
-          console.log("te jodiste");
-        }
-      }}
-    >
+    <button className={cn("btn btn-primary max-w-md", buttonStyles)} onClick={onClickFunction}>
       {icon}
       <RotatingText
         texts={texts}

@@ -7,9 +7,16 @@ type DaoPreviewCardProps = {
   name: string;
   description: string;
   category: string;
+  showModalJoinDao: (address: string) => void;
 };
 
-export const DaoPreviewCard: React.FC<DaoPreviewCardProps> = ({ address, name, description, category }) => {
+export const DaoPreviewCard: React.FC<DaoPreviewCardProps> = ({
+  address,
+  name,
+  description,
+  category,
+  showModalJoinDao,
+}) => {
   //smart contract
   const { data: totalMembers } = useScaffoldReadContract({
     contractName: "DaoForge",
@@ -39,7 +46,7 @@ export const DaoPreviewCard: React.FC<DaoPreviewCardProps> = ({ address, name, d
           {/* <span>💰 {dao.treasury}</span> */}
         </div>
         <div className="card-actions mt-4 justify-between">
-          <button className="btn btn-primary btn-sm">
+          <button onClick={() => showModalJoinDao(address)} className="btn btn-primary btn-sm">
             <LogIn className="w-4 h-4" />
             Join DAO
           </button>

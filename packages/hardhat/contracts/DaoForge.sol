@@ -16,7 +16,7 @@ contract DaoForge {
     }
 
     function joinDao() external {
-        require(msg.sender != tx.origin, "only user. mEJORA ESTO");
+        require(msg.sender == tx.origin, "only user. mEJORA ESTO");
 
         users[userCounter] = msg.sender;
 
