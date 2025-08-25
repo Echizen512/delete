@@ -171,7 +171,7 @@ export const DaoList: React.FC = () => {
             <DaoPreviewCard
               key={y}
               name={x.name}
-              address={x.daoAddress}
+              daoAddress={x.daoAddress}
               description={x.description}
               category={x.category}
               userAddress={userAddress}
