@@ -1,11 +1,11 @@
 "use client";
 
+import { Calendar, DollarSign, Shield, TrendingUp, Users, Vote } from "lucide-react";
 import { Coin3d } from "./Coin3d";
 import { CreateParticles } from "./CreateParticles";
 import { RainbowKitCustomConnectButton } from "./scaffold-eth";
 import GradientText from "./ui/GradientText";
 import RotatingText from "./ui/RotatingText";
-import { Calendar, DollarSign, Shield, TrendingUp, Users, Vote } from "lucide-react";
 
 const features = [
   { icon: Users, title: "DAO Management", desc: "Create and join decentralized organizations" },
@@ -25,7 +25,7 @@ export const LandingPage = () => {
       <div className="absolute inset-0 bg-base-100/40 z-10" />
 
       {/* Coins3D */}
-      <Coin3d coinName="solana" className="z-20" appearanceRight={true} />
+      <Coin3d coinName="polygon" className="z-20" appearanceRight={true} />
       <div className="w-full flex justify-end">
         <Coin3d coinName="usdc" className="z-20" />
       </div>
