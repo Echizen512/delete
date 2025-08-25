@@ -13,19 +13,19 @@ import { useAccount } from "wagmi";
 import { Footer } from "~~/components/Footer";
 import { Header } from "~~/components/Header";
 import { BlockieAvatar } from "~~/components/scaffold-eth";
-import { localStorageKeys } from "~~/constants/localStorageKeys";
+import { LOCAL_STORAGE_KEYS } from "~~/constants/localStorageKeys";
 import { useInitializeNativeCurrencyPrice } from "~~/hooks/scaffold-eth";
+import { useLoginStore } from "~~/services/store/daoLogin.store";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   useInitializeNativeCurrencyPrice();
   const { isConnected } = useAccount();
-
-  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const { isLogin, setIsLogin } = useLoginStore();
 
   useEffect(() => {
-    setIsLogin(localStorage.getItem(localStorageKeys.IS_LOGIN) !== null);
-  }, []);
+    setIsLogin(localStorage.getItem(LOCAL_STORAGE_KEYS.IS_LOGIN) !== null);
+  }, [setIsLogin]);
 
   return (
     <>

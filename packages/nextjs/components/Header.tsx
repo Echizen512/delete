@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BanknoteIcon, BarChartBig, Calendar, ChartBar, Files, HandIcon, Home, Users } from "lucide-react";
+import { BanknoteIcon, BarChartBig, Calendar, ChartBar, Files, HandIcon, Users } from "lucide-react";
 import { hardhat } from "viem/chains";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
@@ -16,11 +16,11 @@ type HeaderMenuLink = {
 };
 
 export const menuLinks: HeaderMenuLink[] = [
-  {
-    label: "Daos",
-    href: "/",
-    icon: <Home className="h-4 w-4" />,
-  },
+  // {
+  //   label: "Daos",
+  //   href: "/",
+  //   icon: <Home className="h-4 w-4" />,
+  // },
   // {
   //   label: "Tasks",
   //   href: "/task",
@@ -28,7 +28,7 @@ export const menuLinks: HeaderMenuLink[] = [
   // },
   {
     label: "Governance",
-    href: "/governance",
+    href: "/",
     icon: <Users className="h-4 w-4" />,
   },
   {

@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { DoorClosedLocked, Loader, LogIn, X } from "lucide-react";
+import { LOCAL_STORAGE_KEYS } from "~~/constants/localStorageKeys";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth/useScaffoldWriteContract";
+import { useLoginStore } from "~~/services/store/daoLogin.store";
 
 type JoinDAOModalProps = {
   contractAddress?: string;
 };
 
 export const JoinDAOModal: React.FC<JoinDAOModalProps> = ({ contractAddress }) => {
+  const { setIsLogin } = useLoginStore();
+
   //states
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,6 +27,9 @@ export const JoinDAOModal: React.FC<JoinDAOModalProps> = ({ contractAddress }) =
       writeDaoForgeAsync({
         functionName: "joinDao",
       });
+
+      localStorage.setItem(LOCAL_STORAGE_KEYS.IS_LOGIN, "true");
+      setIsLogin(true);
     } catch (err) {
       console.log(err);
     } finally {
