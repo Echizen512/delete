@@ -6,7 +6,7 @@ import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 export const metadata = getMetadata({
-  title: "DaoForge — Build, Launch, and Govern DAOs",
+  title: "DaoForge | Build, Launch, and Govern DAOs",
   description: "DaoForge is the ultimate toolkit for creating and managing decentralized autonomous organizations.",
 });
 

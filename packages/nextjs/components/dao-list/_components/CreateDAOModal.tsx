@@ -53,7 +53,7 @@ const CreateDAOModal = () => {
 
         <section className="p-1 flex flex-col gap-4">
           <div className="form-control">
-            <label className="label pl-2">DAO Name</label>
+            <label className="label pl-1">DAO Name</label>
             <input
               type="text"
               value={name}
@@ -64,7 +64,7 @@ const CreateDAOModal = () => {
           </div>
 
           <div className="form-control">
-            <label className="label pl-2">Description</label>
+            <label className="label pl-1">Description</label>
             <textarea
               value={description}
               onChange={e => setDescription(e.target.value)}
@@ -75,14 +75,14 @@ const CreateDAOModal = () => {
           </div>
 
           <div className="form-control">
-            <label className="label">Category</label>
+            <label className="label pl-1">Category</label>
             <select
               value={category}
               onChange={e => setCategory(e.target.value)}
-              className="select select-bordered w-full rounded-lg"
+              className="select select-bordered w-full rounded-lg cursor-pointer"
             >
               {DAO_CATEGORIES.filter(y => y !== "All").map(x => (
-                <option key={x} value={x}>
+                <option key={x} value={x} className="cursor-pointer">
                   {x}
                 </option>
               ))}
