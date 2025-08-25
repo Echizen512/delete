@@ -72,8 +72,8 @@ export const DaoList: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [viewDAO, setViewDAO] = useState<DAO | null>(null);
   const [selectedAdress, setSelectedAdress] = useState<string | undefined>(undefined);
-  //smart contracts
 
+  //smart contracts
   const { data: daos } = useScaffoldReadContract({
     contractName: "DaoForgeFabric",
     functionName: "showDaos",
@@ -104,7 +104,7 @@ export const DaoList: React.FC = () => {
   return (
     <main className="min-h-screen bg-base-200 ">
       {/* Header */}
-      <header className="flex justify-between bg-base-100 sticky top-0 px-2 py-3">
+      <header className="flex justify-between bg-base-100 sticky top-0 px-2 py-3 z-20">
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
             <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />

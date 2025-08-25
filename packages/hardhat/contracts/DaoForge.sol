@@ -19,7 +19,6 @@ contract DaoForge {
         require(msg.sender == tx.origin, "only user. mEJORA ESTO");
 
         users[userCounter] = msg.sender;
-
         userCounter++;
     }
 }

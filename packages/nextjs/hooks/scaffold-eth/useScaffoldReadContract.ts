@@ -46,7 +46,7 @@ export const useScaffoldReadContract = <
   const readContractHookRes = useReadContract({
     chainId: selectedNetwork.id,
     functionName,
-    address: deployedContract?.address || address,
+    address: address || deployedContract?.address,
     abi: deployedContract?.abi,
     args,
     ...(readContractConfig as any),
