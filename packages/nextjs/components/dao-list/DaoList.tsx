@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import DAODetailModal from "../../app/dao/DAODetailModal";
 import { FaucetButton } from "../scaffold-eth/FaucetButton";
 import { RainbowKitCustomConnectButton } from "../scaffold-eth/RainbowKitCustomConnectButton";
 import CreateDAOModal from "./_components/CreateDAOModal";
 import { DaoPreviewCard } from "./_components/DaoPreviewCard";
 import { JoinDAOModal } from "./_components/JoinDAOModal";
-import { Plus } from "lucide-react";
 import { hardhat } from "viem/chains";
+import { useAccount } from "wagmi";
 import { ButtonAnimateText } from "~~/components/ButtonAnimateText";
 import { DAO_CATEGORIES } from "~~/constants/daoCategories";
 import { useTargetNetwork } from "~~/hooks/scaffold-eth";
@@ -66,6 +67,7 @@ type DAO = {
 export const DaoList: React.FC = () => {
   const { targetNetwork } = useTargetNetwork();
   const isLocalNetwork = targetNetwork.id === hardhat.id;
+  const { address: userAddress } = useAccount();
 
   //states
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -172,6 +174,7 @@ export const DaoList: React.FC = () => {
               address={x.daoAddress}
               description={x.description}
               category={x.category}
+              userAddress={userAddress}
               showModalJoinDao={showModalJoinDao}
             />
           ))}

@@ -21,4 +21,15 @@ contract DaoForge {
         users[userCounter] = msg.sender;
         userCounter++;
     }
+
+    //TODO: arreglar esto para leer todos los usuarios y buscar si el address existe
+    function isJoin(address _newUser) external view returns (bool) {
+        bool join;
+        for (uint256 i = 0; i < userCounter; i++) {
+            if (users[i] == _newUser) {
+                join = true;
+            }
+        }
+        return join;
+    }
 }

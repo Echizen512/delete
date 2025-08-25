@@ -24,7 +24,7 @@ export const JoinDAOModal: React.FC<JoinDAOModalProps> = ({ contractAddress }) =
   const handleJoinDao = async () => {
     try {
       setIsLoading(true);
-      writeDaoForgeAsync({
+      await writeDaoForgeAsync({
         functionName: "joinDao",
       });
 
@@ -66,7 +66,7 @@ export const JoinDAOModal: React.FC<JoinDAOModalProps> = ({ contractAddress }) =
             {isLoading ? (
               <>
                 <Loader className="w-4 h-4 animate-spin" />
-                Joining
+                Joining...
               </>
             ) : (
               <>
